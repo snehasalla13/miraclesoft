@@ -1,0 +1,139 @@
+<div class="main-wrapper" >
+  <div class="container-fluid p-2 pl-4 pr-4">
+    <div class="row">
+      <!-- Page content -->
+      <div class="col-md-12 col-xs-11 pl-2 pt-2" >
+        <div class="page-content">
+          <div *ngIf="userConfig._filters" class="row justify-content-between search-buttons ">
+          <div  class="mb-3 ml-2 col-md-4 col-sm-12 btn-block-mobile">
+            <span class="btn btn-outline-secondary btn-round " (click)="searchResultList = []; _searchStatus = 'SEARCH_FRESH'"><span class="fa fa-fw fa-trash text-danger" title=""></span> Clear Search Results</span>
+          </div>
+          <div class="mb-3 ml-2 col-md-4 col-sm-12 text-right btn-block-mobile">
+            <span class="btn btn-outline-secondary btn-round " (click)="userConfig._filters = false; userConfig._aTasks = true; userConfig._wTasks = true;"><span class="fa fa-fw fa-close text-danger" title=""></span> Close Search</span>
+          </div>
+          </div>
+          <!-- <div class="row text-right mb-3 layout-options">
+          <div class="col-md-12">
+          <span class="fa fa-fw fa-random" title="Scrambled List Layout"></span>
+          <span class="fa fa-fw fa-th-list" title="Grouped Lists Layout"></span>
+          <span class="fa fa-fw fa-columns" title="Columned Cards Layout"></span>
+        </div>
+      </div> -->
+          <div class="row mb-3" *ngIf="userConfig._filters" style="min-height: 10rem">
+            <div class=" col-lg-12 col-md-12">
+              <div class="card card-shadow h-100">
+                <div class="card-header-custom green">
+                  <h5>Search Results
+                    <span class="badge mr-2 float-right">{{searchResultList?.length}} <small> Tasks</small></span>
+                  </h5>
+                </div>
+                <div class="card-body pre-scrollable">
+                  <div class="each-task-entry " *ngFor="let task of searchResultList">
+                    <app-task-card (fetchTasks)="fetchTasks(loggedInUser)" [task]=task [history]="true"></app-task-card>
+                  </div>
+                  <span class="notification-message mt-2" *ngIf="searchResultList?.length == 0">
+                    <span *ngIf="_searchStatus === 'SEARCH_FRESH'">
+                      Please use the search filters on the left sidebar to start a search.
+                    </span>
+                     <div *ngIf="_searchStatus === 'SEARCH_PROGRESS'" class="text-center">
+                      <span class="fa fa-fw fa-3x fa-spin fa-circle-o-notch text-warning"></span>
+                    </div>
+                    <span *ngIf="_searchStatus === 'SEARCH_COMPLETE'">
+                      This search resulted in an empty list. Please try different filters.
+                    </span>
+
+                    <!--<img src="../../assets/img/search-resulted-in-an&#45;&#45;empty-list.png" alt="Search results empty" width="60%"> -->
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="userConfig._aTasks">
+            <div class="col-lg-12 col-md-12 assigned-section" >
+              <div class="card card-shadow h-100">
+                <div class="card-header-custom red ">
+                  <h5>Assigned Tasks
+                    <span class="badge mr-2 float-right">{{assignedList?.length}} <small> Tasks</small></span>
+                  </h5>
+                </div>
+                <div class="card-body pre-scrollable">
+                  <div class="each-task-entry" *ngFor="let task of assignedList">
+                    <app-task-card  [task]=task [history]="true"></app-task-card>
+                  </div>
+                  <span  class="notification-message" *ngIf="assignedList?.length == 0">
+                            There are no tasks under this category.
+                          </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="userConfig._wTasks">
+            <div class=" col-lg-12 col-md-12">
+              <div class="card card-shadow h-100">
+                <div class="card-header-custom purple">
+                  <h5>Currently Watching
+                    <span class="badge mr-2 float-right">{{watchList?.length}} <small> Tasks</small></span>
+                  </h5>
+                </div>
+                <div class="card-body pre-scrollable">
+                  <div class="each-task-entry " *ngFor="let task of watchList">
+                    <app-task-card  [task]=task [history]="true"></app-task-card>
+                  </div>
+                  <span  class="notification-message" *ngIf="watchList?.length == 0">
+                            There are no tasks under this category.
+                          </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="userConfig._cTasks">
+            <div class=" col-lg-12 col-md-12">
+              <div class="card card-shadow h-100">
+                <div class="card-header-custom green">
+                  <h5>Completed Tasks
+                    <span class="badge mr-2 float-right">{{completedTaskList?.length}} <small> Tasks</small></span>
+                  </h5>
+                </div>
+                <div class="card-body pre-scrollable">
+                  <div class="each-task-entry " *ngFor="let task of completedTaskList">
+                    <app-task-card  [task]=task [history]="true"></app-task-card>
+                  </div>
+                  <span  class="notification-message" *ngIf="completedTaskList?.length == 0">
+                            There are no tasks under this category.
+                          </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="userConfig._rTasks">
+            <div class=" col-lg-12 col-md-12">
+              <div class="card card-shadow h-100">
+                <div class="card-header-custom orange">
+                  <h5>All the rest
+                    <span class="badge mr-2 float-right">{{restTaskList?.length}} <small> Tasks</small></span>
+                  </h5>
+                </div>
+                <div class="card-body pre-scrollable">
+                  <div class="each-task-entry " *ngFor="let task of restTaskList">
+                    <app-task-card [task]=task [history]="true"></app-task-card>
+                  </div>
+                  <span  class="notification-message" *ngIf="restTaskList?.length == 0">
+                            There are no tasks under this category.
+                          </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div *ngIf="!userConfig._aTasks && !userConfig._wTasks && !userConfig._rTasks && !userConfig._cTasks && !userConfig._filters" class="mt-5 ml-5 p-5 text-muted font-italic text-center">
+
+            <img src="../../assets/img/Filter.png" alt="Filters Image" width="60%">
+            <h3>Please activate filters from the left side bar to view tasks</h3>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

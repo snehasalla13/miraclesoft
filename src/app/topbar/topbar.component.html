@@ -1,0 +1,308 @@
+<mtm-toast-component></mtm-toast-component>
+<nav class="navbar navbar-light bg-light" style="border-bottom: 1px solid #dedede;">
+  <div class="container-fluid">
+    <ul class="mstatus-nav col-12 text-center " role="navigation">
+
+      <li class="dropdown menu btn btn-sm  d-md-none d-lg-none"
+          style="margin-top: 25px !important; margin-left: -25px !important;">
+        <span (click)="this.dataService._sidebarVal=!this.dataService._sidebarVal" class="fa fa-fw fa-bars"></span>
+      </li>
+
+      <li class="dropdown" style="margin-top: 15px !important;">
+        <a class="navbar-brand d-none d-sm-block d-md-block d-lg-block col-sm-8 col-md-8 col-lg-8" href="#">
+          <img src="./assets/img/logo/mil-dark-logo.png" alt="Home" height="40"></a>
+        <a class="navbar-brand d-sm-none d-md-none d-lg-none align-middle " href="#">
+          <img src="./assets/img/logo/mil-dark-logo-mini.png" alt="Home" height="40"></a>
+      </li>
+
+      <li class="search-bar d-none d-md-block d-lg-block col-md-6 col-lg-6 pt-3">
+        <div *ngIf="!isOnline" title="Cannot connect to server!">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-wifi fa-stack-1x" style="font-size: 1em;"></i>
+              <i class="fa fa-ban fa-stack-2x text-danger" style="font-size: 2em;"></i>
+            </span>
+          <span>Cannot connect to server!</span>
+        </div>
+      </li>
+      <li *ngIf="!isOnline" class="d-sm-none d-md-none d-lg-none" title="Cannot connect to server!">
+         <span class="fa-stack fa-lg">
+            <i class="fa fa-wifi fa-stack-1x" style="font-size: 1em;"></i>
+            <i class="fa fa-ban fa-stack-2x text-danger" style="font-size: 2em;"></i>
+          </span>
+      </li>
+      <!--<li><span class="btn" (click)="testthiserror(0)">Test Error</span></li>-->
+      <li class="dropdown menu btn btn-sm" data-toggle="modal" role="button" data-target="#createTaskModal"
+          title="New Task">
+        <a class="text-secondary ">
+          <div class="row">
+            <div class="fa fa-fw fa-stack col-12">
+              <span class="fa fa-fw fa-stack-1x fa-plus-square"></span>
+              <span class="fa fa-fw fa-stack-2x fa-circle-thin"></span>
+            </div>
+          </div>
+        </a>
+      </li>
+      <li class="dropdown menu btn" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <a class="text-secondary " href="#" id="notifications" title="Notifications">
+          <div class="row">
+            <div class="fa fa-fw fa-stack col-12">
+            <span class="fa fa-fw fa-stack-1x fa-bell" style="font-size: 0.8em !important;"><sup
+              *ngIf="notifications.length > 0"><span
+              class="badge badge-primary notification-badge"
+              style="font-family: Montserrat ">{{notifications.length}}</span></sup></span>
+              <span class="fa fa-fw fa-stack-2x fa-circle-thin"></span>
+            </div>
+          </div>
+        </a>
+        <div class="dropdown-menu pt-0 pb-0 notification-list-mobile" aria-labelledby="notifications"
+             style="margin-left: -270px; width: 330px;">
+          <div *ngIf="notifications.length > 0" class="pre-scrollable notification-list">
+            <div *ngFor="let notificationObj of notifications; let i = index" class="notification-item">
+              <i class="left-icon"></i>
+              <span class="notification-description small col-sm-12 p-2"
+                    [routerLink]="[notificationObj.notification.click_action]" (click)="notifications.splice(i, 1)">{{notificationObj.notification.body}}</span>
+            </div>
+
+            <div class="text-center p-2 text-primary small" (click)="notifications=[]">
+              <span>
+                <i class="fa fa-fw fa-trash-o " style="font-size: small !important;"></i>
+                Clear Notifications
+              </span>
+            </div>
+          </div>
+          <div #noNotifications *ngIf="notifications.length == 0" class="text-center p-2">
+            <span class="small text-muted">No Notifications !</span>
+          </div>
+        </div>
+      </li>
+      <li class="dropdown menu btn" style="margin-top: 17px !important;">
+
+        <a class="text-secondary " id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img [src]="'https://www.miraclesoft.com/images/employee-profile-pics/'+loggedInUser.LoginId+'.png'" [alt]="loggedInUser.FName" width="30px" height="30px"
+               style="border-radius: 30px; border: 1px solid transparent;">
+
+          <span class="fa fa-fw fa-chevron-down" style="font-size: small !important;"></span>
+        </a>
+
+        <div class="dropdown-menu pt-0 pb-0" aria-labelledby="profile" style="margin-left: -85px; ">
+          <div class="notification-list">
+            <div class="notification-item no-hover" style="border-bottom: none" >
+              <i class="left-icon"></i>
+              <span class="notification-description small col-sm-12 p-2">{{loggedInUser.FName}}</span>
+            </div>
+            <div class="notification-item no-hover"  >
+              <!--<div class="col-md-12 ">
+                <span>Your Score</span>
+              </div>-->
+              <div class="row text-center notification-description pb-2">
+                <div class="rank col-md-12" title="Weekly Points">
+                  <span class="h6" *ngIf="profileData"><span style="font-size: small !important;" class="fa fa-fw fa-star text-danger"></span> {{profileData['weekBoard']['points']}}</span><span class="small"> Points </span>
+                </div>
+                <!--<div class="totalTasks col-md-6" title="Completed Tasks">
+                  <span class="h6" *ngIf="profileData"><span style="font-size: small !important;" class="fa fa-fw fa-hourglass-half text-secondary"></span> {{profileData['weekBoard']['taskCount']}}</span>
+                </div>-->
+
+              </div>
+            </div>
+            <div class="scoreboard notification-item" [routerLink]="['/leaderboard']">
+                <span class="notification-description small col-sm-12 p-2 ">
+              <span class="fa fa-fw fa-bar-chart" style="font-size: small !important;"></span> Score board
+                </span>
+            </div>
+            <div class="notification-item" [routerLink]="['/employeeboard']">
+              <span class="notification-description small col-sm-12 p-2 ">
+            <span class="fa fa-fw fa-user-circle" style="font-size: small !important;"></span> Employee board
+              </span>
+          </div>
+            <div class="notification-item" [routerLink]="['/profile']">
+                <span class="notification-description small col-sm-12 p-2 ">
+              <span class="fa fa-fw fa-user-o" style="font-size: small !important;"></span> Profile
+                </span>
+              </div>
+
+              <div class="notification-item" [routerLink]="['/sample']">
+                <span class="notification-description small col-sm-12 p-2 ">
+              <span class="fa fa-fw fa-user-o" style="font-size: small !important;"></span> Psample
+                </span>
+              </div>
+
+            <div class="notification-item mb-0" style="border-bottom: none" (click)="logout()">
+            <span class="notification-description small col-sm-12 p-2 ">
+              <span class="fa fa-fw fa-sign-out" style="font-size: small !important;"></span> Sign Out
+            </span>
+            </div>
+          </div>
+
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<script type="application/javascript">
+
+  Notification.requestPermission(function (status) {
+    console.log('Notification permission status:', status);
+  });
+</script>
+
+
+<!-- Modal -->
+<div class="modal fade" id="createTaskModal" tabindex="-1" role="dialog" aria-labelledby="createTaskModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form #createTaskForm="ngForm">
+        <div class="modal-header bg-dark text-light">
+          <h5 class="modal-title" id="createTaskModalLabel">Create a new task</h5>
+          <button type="button" (click)="d.close();createTaskForm.reset();resetNewTask()" class="close text-light"
+                  data-dismiss="modal"
+                  aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <!-- <div class="form-group" >
+             <label>Project Name <span class="text-danger"><sup>*</sup></span></label>
+             <input autocomplete="off" type="text" class="form-control form-control-sm" id="projectName" name="projectName"
+                    placeholder="Project Name" #projectName="ngModel" [ngModel]="newTask.projectName" value="project"
+                    minlength="5" maxlength="50" required>
+             <div *ngIf="projectName.invalid && (projectName.dirty || projectName.touched)"
+                  class="alert alert-danger">
+
+               <div *ngIf="projectName.errors.required">
+                 Name is required.
+               </div>
+               <div *ngIf="projectName.errors.minlength">
+                 Name must be at least 5 characters long.
+               </div>
+
+
+             </div>
+           </div>-->
+          <div class="form-group">
+            <label>Title<span class="text-danger"><sup>*</sup></span></label>
+            <input autocomplete="off" type="text" class="form-control form-control-sm" id="title" name="title"
+                   placeholder="Title" ngModel
+                   #title="ngModel" [(ngModel)]="newTask.title" minlength="10" maxlength="50" required>
+            <small><code [ngClass]="(newTask.title.length > 9)? 'text-success' : 'text-danger'">({{newTask.title.length}}/50)</code>
+            </small>
+            <!--<div *ngIf="title.invalid && (title.dirty || title.touched)"
+                 class="text-danger small">
+              <div *ngIf="title.errors.required">
+                Project title is required.
+              </div>
+              <div *ngIf="title.errors.minlength">
+                Project title must be at least 10 characters long.
+              </div>
+            </div>-->
+          </div>
+          <div class="form-group">
+            <label>Description<span class="text-danger"><sup>*</sup></span></label>
+            <textarea class="form-control" id="desc" #description="ngModel" [(ngModel)]="newTask.desc" name="desc"
+                      placeholder="Tell us more about the task" ngModel
+                      maxlength="160"
+                      minlength="20" required></textarea>
+            <small><code [ngClass]="(newTask.desc.length > 19)? 'text-success' : 'text-danger'">({{newTask.desc.length}}/160)</code>
+            </small>
+            <!--<div *ngIf="description.invalid && (description.dirty || description.touched)"
+                 class="text-danger small ">
+              <div *ngIf="description.errors.required">
+                Description is required.
+              </div>
+              <div *ngIf="description.errors.minlength">
+                Description must be at least 20 characters long.
+              </div>
+            </div>-->
+          </div>
+          <div class="form-group">
+            <label>Assign To<span class="text-danger"><sup>*</sup></span></label>
+            <div ngbDropdown placement="top" #assigneeDropDown="ngbDropdown">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><span class="fa fa-fw fa-user-o"></span></span>
+                </div>
+                <input autocomplete="off" type="text" class="form-control form-control-sm" id="assignedTo"
+                       name="assignedTo"
+                       placeholder="Assign To" aria-label="Assign To" aria-describedby="user-icon"
+                       (keydown)="getSuggestion($event,'assignee');assigneeDropDown.open();" ngbDropdownAnchor
+                       #assignee="ngModel" [(ngModel)]="assignId" required>
+              </div>
+              <!-- <div *ngIf="assignee.invalid && (assignee.dirty || assignee.touched)"
+                    class="text-danger small">
+                 <div *ngIf="assignee.errors.required">
+                   Assignee is required.
+                 </div>
+               </div>-->
+              <div ngbDropdownMenu *ngIf="empListAssignee.length > 0">
+                <div *ngFor="let emp of empListAssignee">
+                  <button class="dropdown-item" (click)="addAssignee(emp);">{{emp?.EmployeeName}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Watchers</label>
+            <div ngbDropdown placement="top" #watcherDropDown="ngbDropdown">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><span class="fa fa-fw fa-users"></span></span>
+                </div>
+                <input autocomplete="off" type="text" class="form-control form-control-sm" id="watcher" name="watcher"
+                       placeholder="Add a Watcher" aria-label="Add a Watcher" aria-describedby="user-group"
+                       (keyup)="getSuggestion($event,'watcher');watcherDropDown.open();" data-role="tagsinput" #watcher
+                       ngbDropdownAnchor [(ngModel)]="watcherName">
+                <!-- <div class="input-group-append">
+                   <button type="button" class="btn btn-sm btn-outline-secondary"
+                           (click)="addWatcher(watcher.value)">Add
+                   </button>
+                 </div>-->
+              </div>
+              <div ngbDropdownMenu *ngIf="empListWatcher.length > 0">
+                <div *ngFor="let emp of empListWatcher">
+                  <button class="dropdown-item" (click)="addWatcher(emp);">{{emp?.EmployeeName}}</button>
+                </div>
+              </div>
+            </div>
+            <div class="d-inline-block mt-2" *ngFor="let watcher of listOfWatchers">
+              <div class="watcher ml-1 btn " (click)="deleteWatcher(watcher)">{{watcher}}<span
+                class="fa fa-fw fa-remove text-danger"></span></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Due Date<span class="text-danger"><sup>*</sup></span></label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" (click)="d.toggle()"><span class="fa fa-fw fa-calendar"></span></span>
+              </div>
+              <input autocomplete="off" type="text" class="form-control form-control-sm" id="dueDate" name="dueDate"
+                     placeholder="Due Date" #dueDate="ngModel" [(ngModel)]="defaultDate" [minDate]="currentDate"
+                     ngbDatepicker #d="ngbDatepicker" [autoClose]="true" (click)="d.toggle()" required>
+            </div>
+            <!-- <div *ngIf="dueDate.invalid && (dueDate.dirty || dueDate.touched)"
+                  class="text-danger small">
+               <div *ngIf="dueDate.errors.required">
+                 Due Date is required.
+               </div>
+             </div>-->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary btn-round" data-dismiss="modal"
+                  (click)="d.close();createTaskForm.reset();resetNewTask();"><span
+            class="fa fa-fw fa-times circle"></span> Cancel
+          </button>
+          <button type="button" class="btn btn-outline-primary btn-round" data-dismiss="modal"
+                  [disabled]="!createTaskForm.form.valid" [ngClass]="!createTaskForm.form.valid? 'disabled' : ''"
+                  (click)="createTask(createTaskForm.value);"><span
+            class="fa fa-fw fa-plus"></span> Create
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--Create Task Modal Ends-->
+

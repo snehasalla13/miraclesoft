@@ -1,0 +1,142 @@
+.task-wrapper {
+padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+  border-left: 2px solid transparent;
+
+
+&.new-task {
+  border-left: 2px solid green;
+  //background: rgba(232, 240, 255,0.5);
+  -moz-animation: cssAnimation ease-in 3s;
+  /* Firefox */
+  -webkit-animation: cssAnimation ease-in 3s;
+  /* Safari and Chrome */
+  -o-animation: cssAnimation ease-in 3s;
+  /* Opera */
+  animation: cssAnimation ease-in 3s;
+
+}
+  @keyframes cssAnimation {
+    0% {
+      border-left: 2px solid green;
+    }
+    100% {
+      border-left: 2px solid transparent;
+    }
+
+  }
+  @-webkit-keyframes cssAnimation {
+    0% {
+      border-left: 2px solid green;
+    }
+    100% {
+      border-left: 2px solid transparent;
+    }
+
+  }
+
+  cursor: pointer;
+  .unsubscribe {
+    opacity: 0;
+  }
+  &:hover .unsubscribe {
+    opacity: 1;
+  }
+  @media (max-width: 767.98px) {
+    .unsubscribe {
+      opacity: 1;
+    }
+  }
+
+    .modal{
+    z-index: 999 !important;
+  }
+
+  #collapseExample {
+   // background-color: #fff;
+    cursor: default;
+    padding-top: 0.1rem;
+    padding-bottom: 1rem;
+    .history {
+      .history-header {
+        margin: 15px 0px 5px 0px;
+      }
+    }
+    .task-recent-status {
+      // border-bottom: 1px solid #dfdfdf;
+      border-left: 2px solid #ccc;
+      padding: 12px 0px 10px 0px;
+      /* &:nth-child(4) {
+      border-bottom: 1px solid transparent;
+      margin-bottom: 20px;
+      }*/
+      .fa-circle {
+        position: relative;
+        left: -7.5px;
+        color: #fff;
+        border: 1px solid dodgerblue;
+        border-radius: 30px;
+        font-size: x-small;
+        background: #fff;
+      }
+      .history-label {
+        margin-left: -10px;
+      }
+      .description {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  .task-actions {
+    .btn {
+      padding: 0.2rem .7rem !important;
+      margin: 0px 2px;
+      &:first-child {
+        margin-left: 0px;
+      }
+      &:last-child {
+        margin-right: 0px;
+      }
+    }
+    margin-top: 20px;
+    &-watching {
+      opacity: 0;
+    }
+
+  }
+
+  .task-rest-option {
+    cursor: pointer;
+    opacity: 0.5;
+  }
+
+
+}
+
+.watcher {
+  border: 1px solid #bec0c4;
+  border-radius: 50px;
+  padding: 3px 15px;
+}
+
+
+.addStatus-modal {
+  .modal-header {
+    background: #00aae7;
+  }
+  .addStatus-btn {
+    border: 1px solid #00aae7;
+    color: #00aae7;
+    background: white;
+  &:hover {
+    color: white;
+    background: #00aae7;
+  }
+
+  }
+
+
+
+}
+

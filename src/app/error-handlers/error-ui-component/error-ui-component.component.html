@@ -1,0 +1,43 @@
+<div class="error-wrapper">
+  <div class="container">
+    <div class="mt-5 mb-5">
+
+    <h1 style="font-size: 4rem"><span class="fa fa-fw fa-warning text-warning" style="font-size: 3rem"></span> Ouch!</h1>
+    </div>
+    <div *ngIf="errorObj.status !=='INTERNAL_ERROR'; else elseblock">
+      <div [ngSwitch]="errorObj.status">
+        <div *ngSwitchCase="404">
+          <!--<img src="../../../assets/img/HTTP-400.png" alt="Error 404" width="60%">-->
+          <h1 class="text-muted">404 Not Found</h1>
+          <h3>Oops, the page you're looking for does not exist.</h3>
+        </div>
+        <div *ngSwitchCase="400">
+          <!--<img src="../../../assets/img/HTTP-400.png" alt="Error 400" width="60%">-->
+          <h1 class="text-muted">400 Bad Request</h1>
+          <h3>Looks like the server did not like the previous request.</h3>
+        </div>
+        <div *ngSwitchCase="500">
+          <!--<img src="../../../assets/img/HTTP-500.png" alt="Error 500" width="60%">-->
+          <h1 class="text-muted">500 Server Error</h1>
+          <h3>Looks like we're having some server issue.</h3>
+        </div>
+        <div *ngSwitchDefault>
+          <!--<img src="../../../assets/img/Application-Error.png" alt="Application Error" width="60%">-->
+          <h1 class="text-muted">{{errorObj.status}}</h1>
+          <h3>That's new! We have been notified about the incident.</h3><h3>We promise to resolve it on the double.</h3>
+        </div>
+      </div>
+
+    </div>
+    <ng-template #elseblock>
+      <!--<img src="../../../assets/img/Application-Error.png" alt="Application Error" width="60%">-->
+      <h3>Looks like the application ran into an issue.</h3>
+    </ng-template>
+   <!-- <hr>
+    <code>{{errorObj.error}}</code>-->
+    <hr>
+    <span>You may want to head back to the homepage.</span>
+    <br>
+    <span class="btn btn-lg btn-outline-primary btn-round mt-4" [routerLink]="['/']"><span class="fa fa-fw fa-home"></span> Go To Homepage</span>
+  </div>
+</div>

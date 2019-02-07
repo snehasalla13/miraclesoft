@@ -1,0 +1,177 @@
+<div class="container-fluid leaderboard-wrapper">
+  <div class="title p-2">
+    <h3><span class="fa fa-fw fa-bar-chart"></span> Weekly Scoreboard</h3>
+    <div class="small text-right" style="cursor: pointer" data-toggle="modal" role="button"
+         data-target="#scoreInfoModal"><span class="fa fa-fw fa-info-circle text-secondary"></span> How are my points
+      calculated?
+    </div>
+  </div>
+  <div class="score-table">
+    <div class="card p-md-4 p-1 p-sm-2 mobile-font-small">
+      <table datatable class="table text-center table-striped table-hover">
+        <thead class="text-light" style="background: #231F20">
+        <tr class="small font-weight-normal">
+          <th scope="col"><span class="fa fa-fw fa-trophy text-warning"></span> Rank</th>
+          <th scope="col" class="text-left"><span class="fa fa-fw fa-user-o"></span> Employee </th>
+          <th scope="col"><span class="fa fa-fw fa-hourglass-half text-secondary "></span> Active Tasks</th>
+          <th scope="col"><span class="fa fa-fw fa-info-circle text-danger"></span> Status</th>
+          <!-- <th scope="col"><span class="fa fa-fw fa-hourglass-half text-light "></span> Completed Tasks</th>
+          <th scope="col"><span class="fa fa-fw fa-star text-danger"></span> Weekly Points</th>
+          <th scope="col" class="text-left"><span class="fa fa-fw fa-bar-chart-o text-success"></span> Score</th> -->
+        </tr>
+        </thead>
+        <tbody>
+            <!-- <div><tr *ngFor="let emp of empList|slice:0;let i = index"
+            [ngClass]="emp['userName'] === loggedInUser.LoginId ? 'font-weight-bold' : '' ">
+          <td scope="row">{{i+1}}</td>
+          <td class="text-left">  {{emp['fName']}}
+           <span class="small">
+              ({{emp['userName']}})</span></td>
+          <td>{{emp['activeTasks']}}</td></div>
+        </tr>
+        <tr></tr> -->
+
+
+          <tr *ngFor="let emp of empList|slice:0;let i = index"
+            [ngClass]="emp['userName'] === loggedInUser.LoginId ? 'font-weight-bold' : '' ">
+          <td>{{i+1}}</td>
+          <td class="text-left">  {{emp['fName']}}
+            <a [routerLink]="['/','profile',emp['userName']]"><span class="small">
+              ({{emp['userName']}})</span></a></td>
+          <td>{{emp['activeTasks']}}</td>
+          <td>{{emp['status']}}</td>
+        </tr>
+        <tr></tr>
+
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</div>
+          <!-- <td>{{emp['weekBoard']['taskCount']}}</td>
+          <td>{{emp['weekBoard']['points']}} -->
+            <!--
+            <span class="fa fa-fw" style="font-size: small !important;"
+                  [ngClass]="(emp['weekBoard']['points'] > emp['previousWeekBoard']['points'])? 'fa-arrow-up text-success' : 'fa-arrow-down text-danger'"></span>-->
+          <!-- </td> -->
+          <!-- <td style="cursor: help" class="text-left"
+              [title]="'Previous week ' +  emp['previousWeekBoard']['score']['$numberDecimal']">
+            {{emp['weekBoard']['score']['$numberDecimal']}}
+            <span style="font-size: xx-small"
+                  *ngIf="toFloat(emp['weekBoard']['score']['$numberDecimal']) !=
+                  toFloat(emp['previousWeekBoard']['score']['$numberDecimal'])">
+                  <span class="fa fa-fw" style="font-size: xx-small !important;"
+              [ngClass]="(toFloat(emp['weekBoard']['score']['$numberDecimal']) >
+              toFloat(emp['previousWeekBoard']['score']['$numberDecimal']))? 'fa-arrow-up text-success' :
+               'fa-arrow-down text-danger'"></span>
+              {{getDifference(emp['weekBoard']['score']['$numberDecimal'],
+              emp['previousWeekBoard']['score']['$numberDecimal']) }}
+            </span>
+          </td> -->
+
+
+          <!-- <td>{{emp['weekBoard']['taskCount']}}</td>
+          <td>{{emp['weekBoard']['points']}} </td> -->
+            <!--
+            <span class="fa fa-fw" style="font-size: small !important;"
+                  [ngClass]="(emp['weekBoard']['points'] > emp['previousWeekBoard']['points'])? 'fa-arrow-up text-success' : 'fa-arrow-down text-danger'"></span>-->
+
+          <!-- <td style="cursor: help" class="text-left"
+              [title]="'Previous week ' +  emp['previousWeekBoard']['score']['$numberDecimal']">
+            {{emp['weekBoard']['score']['$numberDecimal']}}
+            <span style="font-size: xx-small"
+                  *ngIf="toFloat(emp['weekBoard']['score']['$numberDecimal']) !=
+                  toFloat(emp['previousWeekBoard']['score']['$numberDecimal'])">
+                  <span class="fa fa-fw" style="font-size: xx-small !important;"
+              [ngClass]="(toFloat(emp['weekBoard']['score']['$numberDecimal']) >
+              toFloat(emp['previousWeekBoard']['score']['$numberDecimal']))? 'fa-arrow-up text-success' :
+               'fa-arrow-down text-danger'"></span>
+              {{getDifference(emp['weekBoard']['score']['$numberDecimal'],
+              emp['previousWeekBoard']['score']['$numberDecimal']) }}
+            </span>
+          </td> -->
+
+
+        <!-- <tr *ngIf="userProfile && userProfile['rank'] != 11"
+        class="small">
+          <td scope="row"><span class="fa fa-fw fa-ellipsis-v"></span></td>
+          <td scope="row" class="text-left"><span class="fa fa-fw fa-ellipsis-v"></span></td>
+          <td><span class="fa fa-fw fa-ellipsis-v"></span></td>
+          <td><span class="fa fa-fw fa-ellipsis-v"></span></td>
+          <td class="text-left"><span class="fa fa-fw fa-ellipsis-v"></span></td>
+        </tr>
+        <tr></tr> -->
+        <!-- <tr *ngIf="userProfile" class="font-weight-bold">
+          <td scope="row">{{userProfile['rank']}}</td>
+          <td scope="row" class="text-left">{{userProfile['user']['name']}}
+            <span class="small">({{userProfile['user']['username']}})</span>
+          </td>
+          <td>{{userProfile['user']['activeTasks']}}</td> -->
+          <!-- <td>{{userProfile['user']['weekBoard']['taskCount']}}</td>
+          <td>{{userProfile['user']['weekBoard']['points']}}</td>
+          <td class="text-left" style="cursor: help; "
+              [title]="'Previous week ' +  userProfile['user']['previousWeekBoard']['score']['$numberDecimal']">
+            {{userProfile['user']['weekBoard']['score']['$numberDecimal']}}
+            <span class="fa fa-fw" style="font-size: xx-small !important;"
+                  [ngClass]="
+                  (toFloat(userProfile['user']['weekBoard']['score']['$numberDecimal']) >
+                  toFloat(userProfile['user']['previousWeekBoard']['score']['$numberDecimal']))?
+                   'fa-arrow-up text-success' : 'fa-arrow-down text-danger'"></span>
+            <span style="font-size: xx-small !important;">{{getDifference(userProfile['user']
+              ['weekBoard']['score']['$numberDecimal'],
+              userProfile['user']['previousWeekBoard']['score']['$numberDecimal'])}}</span>
+            </td> -->
+
+
+        <!-- </tr> -->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="scoreInfoModal" tabindex="-1" role="dialog" aria-labelledby="scoreInfoModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-light">
+        <h5 class="modal-title" id="scoreInfoModalLabel">How are my points calculated?</h5>
+        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body small">
+        <p>You accumulate points for every update you make. Here is how points are assigned to each update</p>
+        <ul>
+          <li><b>+10</b> points on every successful status update on all your tasks</li>
+          <li><b>-50</b> points, every time you change due date on a task</li>
+          <li><b>+2</b> points on every successful status update on all your tasks after the due date on a task has
+            passed
+          </li>
+          <li><b>-25</b> points for task deletion</li>
+        </ul>
+        <span><u>Special Bonus</u></span>
+        <ul>
+          <li><b>+25</b> points for task creation</li>
+          <li><b>+15</b> points on task completion on or before task due date</li>
+          <li><b>+8</b> points on task completion after task due date</li>
+        </ul>
+        <p>Your score is an average of points over tasks (in progress) during the current week</p>
+        <hr>
+        <p>Status update frequency</p>
+        <ul>
+          <li>If Due Date is in <b>3 days or less</b> from current date, then 3 status updates required per task. Status update window
+            is 3 hours
+          </li>
+          <li>If Due Date is in <b>4 to 14 days</b> from current date, then 1 status update required per task. Status
+            update window is 9 hours
+          </li>
+          <li>If Due Date is later than <b>14 days</b>, then 1 status update required per week (on Wednesday) per task. Status update window
+            is 9 hours
+          </li>
+        </ul>
+        <span><u>Note</u>: Failing to update during these windows would result in you losing 10 points</span>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Create Task Modal Ends-->

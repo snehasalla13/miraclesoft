@@ -1,0 +1,23 @@
+{
+   "name": "Miracle - Task Manager",
+   "short_name": "mStatus",
+   "start_url": "./",
+   "theme_color": "#F4F6F9",
+   "background_color": "#F4F6F9",
+   "display": "standalone",
+   "description": "Your new zen of productivity, project management and task tracking",
+   "icons": [
+
+        {
+            "src": "/assets/img/icon-192x192.png",
+            "sizes": "150x150",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/img/logo/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+   ]
+
+}

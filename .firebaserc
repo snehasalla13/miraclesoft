@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "mstatus-53617",
+    "prod": "mstatus-web"
+  }
+}

@@ -1,0 +1,159 @@
+<div class="container profile-wrapper">
+  <div class="profile-details-section row pt-4">
+
+    <div class="col-md-3 text-center">
+      <img [src]="'https://www.miraclesoft.com/images/employee-profile-pics/'+userid+'.png'"
+         width="200em" height="200em" [alt]="user.FName"
+           style="border: 1px solid transparent; border-radius: 500px">
+      <!-- <h4 class="mt-2">{{user.FName}} {{user.LName}}</h4> -->
+      <h4 class="mt-2">{{ firstName }}</h4>
+      <!--<h5>@{{user.LoginId}}</h5>-->
+    </div>
+    <div class="col-md-9 pl-2 pl-md-4 mt-4 mt-sm-0 mt-md-0 mt-lg-0">
+      <div class="col-md-6 float-left">
+        <!--<div class="card text-center m-1 mt-0 bg-warning text-light" *ngIf="profileData">
+          <div class="row p-4">
+            <div class="col-8 text-left">
+              <div class="h1 font-weight-bold ">{{profileData['weekBoard']['points']}}</div>
+              <div class="small font-weight-bold"> Points</div>
+            </div>
+            <div class="col-4 mt-2">
+              <span class="fa fa-fw fa-trophy fa-4x" style="color: rgba(255, 255, 255, 0.5) !important;"></span>
+            </div>
+          </div>
+        </div>-->
+        <div class="card text-center m-1" style="margin-top: 0 !important;">
+          <div class="row p-3">
+            <div class="col-8 text-left">
+              <div class="h1 font-weight-bold "><span *ngIf="profileData"> {{profileData['weekBoard']['points']}}</span><span
+                *ngIf="!profileData" class="fa fa-fw fa-spin fa-circle-o-notch"></span></div>
+              <div class="small text-muted">Points</div>
+              <div class="text-muted" style="font-size: xx-small">This week</div>
+            </div>
+            <div class="col-4 mt-2">
+              <span class="fa fa-fw fa-star fa-4x text-danger"></span>
+            </div>
+          </div>
+        </div>
+        <div class="card text-center m-1 mt-3">
+          <div class="row p-3">
+            <div class="col-8 text-left">
+              <div class="h1 font-weight-bold "><span
+                *ngIf="profileData"> {{profileData['weekBoard']['taskCount']}}</span><span *ngIf="!profileData"
+                                                                                           class="fa fa-fw fa-spin fa-circle-o-notch"></span>
+              </div>
+              <div class="small text-muted">Completed Tasks</div>
+              <div class="text-muted" style="font-size: xx-small">This week</div>
+            </div>
+            <div class="col-4 mt-2">
+              <span class="fa fa-fw fa-hourglass-half text-secondary" style="font-size: 3.25em !important;"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card p-4 col-md-6 text-center float-right margin-top4-mobile">
+        <span class="h6 text-muted small font-weight-bold">Status Update Reminder Settings</span>
+        <form *ngIf="edit; else settingsSummary" class="mt-4" #profileForm="ngForm">
+          <div class="form-group row">
+            <span class="col-md-4 small"><span class="fa fa-fw fa-lg fa-map-o text-muted "></span> Time Zone</span>
+            <span class="col-md-8">
+              <select name="timeZone" class="form-control form-control-sm" ngModel required>
+                <option value="EST">Eastern Standard Time</option>
+                <option value="PST">Pacific Standard Time</option>
+                <option value="CST">Central Standard Time</option>
+                <option value="MST">Mountain Standard Time</option>
+                <option value="IST">Indian Standard Time</option>
+              </select>
+            </span>
+          </div>
+          <div class="form-group row">
+            <span class="col-md-4 small"><span class="fa fa-fw fa-lg fa-clock-o text-muted"></span> Start Time</span>
+            <span class="col-md-8">
+              <input type="time" class="form-control form-control-sm" name="startTime" ngModel required>
+            </span>
+          </div>
+          <!-- <div class="form-group row">
+             <span class="col-md-4 small"><span class="fa fa-fw fa-lg fa-clock-o text-muted"></span> End Time</span>
+             <span class="col-md-8">
+               <input type="time" class="form-control form-control-sm" name="endTime" ngModel required>
+             </span>
+           </div>-->
+          <div class="pt-3">
+          <div class="form-group pt-2 pb-0 float-left">
+            <button type="button" class="btn btn-sm btn-outline-secondary btn-round"
+                    (click)="edit = false">
+              <span class="fa fa-fw fa-close"></span> Cancel
+            </button>
+          </div>
+          <div class="form-group pt-2 pb-0 float-right">
+            <button type="button" class="btn btn-sm btn-outline-primary btn-round" *ngIf= "isvalidUser()"
+                    [disabled]="profileForm.invalid" (click)="saveChanges(profileForm.value)">
+              <span class="fa fa-fw" [ngClass]="processing? 'fa-circle-o-notch fa-spin' : 'fa-save'"></span> Save
+              Changes
+            </button>
+          </div>
+          </div>
+        </form>
+
+        <ng-template #settingsSummary class="p-2 text-center border-dark">
+          <div class="form-group row m-0 p-2 mt-2">
+            <span class="col-6 small"><span class="fa fa-fw fa-lg fa-map-o text-muted "></span> Time Zone</span>
+            <span class="col-6" *ngIf="profileData">
+        {{profileData['timeZone']}}
+      </span>
+          </div>
+          <div class="form-group row m-0 p-2">
+            <span class="col-6 small"><span class="fa fa-fw fa-lg fa-clock-o text-muted"></span> Start Time</span>
+            <span class="col-6" *ngIf="profileData">
+        {{profileData['startTime'] | date: 'hh:mm a'}}
+      </span>
+          </div>
+          <div class="form-group row m-0 p-2">
+            <span class="col-6 small"><span class="fa fa-fw fa-lg fa-clock-o text-muted"></span> End Time</span>
+            <span class="col-6" *ngIf="profileData">
+       {{profileData['endTime'] | date: 'hh:mm a'}}
+
+      </span>
+          </div>
+
+          <div class="form-group pb-0 float-right" *ngIf="isvalidUser()">
+            <button type="button" class="btn btn-sm btn-outline-primary btn-round"
+                    (click)="edit = true">
+              <span class="fa fa-fw fa-pencil"></span> Edit
+            </button>
+          </div>
+
+          <span class="text-muted" style="font-size: xx-small">Note: 1. End time is calculated as 9 hours from start time.</span>
+          <span class="text-muted" style="font-size: xx-small">2. Notifications will be sent during the next nearest cycle.</span>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <hr class="bg-dark">
+  <div class="profile-config-section row p-0">
+    <!--<span class="col-12 p-1 h4 ">Statistics</span>-->
+
+    <div class=" card pt-4 pb-4 pl-2 pr-2 card-full-width-mobile" style="width: 48%; margin-right: 1em;">
+
+      <div id="chart1">
+        <canvas id="doughnut">{{ doughnut }}</canvas>
+      </div>
+      <div class="small text-center text-muted mt-2 mb-2">Task Snapshot</div>
+    </div>
+    <div class=" card pt-4 pb-4 pl-2 pr-2 card-full-width-mobile" style="width: 49%; margin-left: 1em;">
+
+      <div id="chart2">
+        <canvas id="barChart">{{ barChart }}</canvas>
+      </div>
+      <div class="small text-center text-muted mt-2 mb-2">Progress</div>
+    </div>
+    <!--  <canvas baseChart
+              [data]="doughnutChartData"
+              [labels]="doughnutChartLabels"
+              [chartType]="doughnutChartType"
+              ></canvas>-->
+
+  </div>
+</div>

@@ -1,0 +1,124 @@
+.wrapper {
+  background-image: url("../../assets/img/logo/pattern.png");
+  // max-height: 100vh !important;
+  height: 100vh !important;
+
+  .login-card{
+  .card-left{
+  padding: 1.25rem;
+  background-color: #231f20;
+  color: #fff;
+  .login-card-header{
+    font-size: 45px;
+    font-weight: 200;
+    span{
+      font-weight: 400
+    }
+  }
+  .icons {
+    color: rgba(255,255,255,0.2);
+    font-size: 25px;
+    display: flex;
+    justify-content: space-between;
+    .lnr{
+      animation-name: example;
+      animation-duration: 5s;
+      animation-iteration-count: infinite;
+      &.lnr-calendar-full{
+        animation-delay: 2s;
+      }
+      &.lnr-rocket{
+        animation-delay: 4s;
+      }
+      &.lnr-clock{
+        animation-delay: 6s;
+      }
+      &.lnr-alarm{
+        animation-delay: 8s;
+      }
+      &.lnr-code{
+        animation-delay: 10s;
+      }
+    }
+  }
+  .card-tagline{
+    font-size: 20px;
+    font-weight: 200;
+  }
+  .login-card-content-main{
+    .tagline{
+      .tagline-inner{
+        text-align: center;
+        width: 85%;
+        margin: 0px auto;
+      }
+    }
+    .card-form{
+      padding-top: 15px;
+      margin-bottom: 10px;
+      .form-group{
+        margin: 0px auto;
+        width: 80%;
+      }
+      .form-control{
+        background-color: transparent;
+        margin-top: 12px;
+        border-radius: 0px;
+        color: #fff;
+        border-color: #fff;
+        // border-width: 0px 0px 1px 0px;
+        &::placeholder{
+          color: #ccc;
+        }
+        &:first-child{
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+  .login-cta{
+    .login-button-type{
+      &-1{
+        margin-top: 40px;
+        width: 41%;
+        background-color: transparent;
+        border: 1px solid #fff;
+        color: #fff;
+        &:hover{
+          background-color: #ccc;
+          color: #000;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+.card-right{
+border: 1px solid #231f20;
+.login-card-header{
+font-size: 45px;
+font-weight: 200;
+span{
+font-weight: 400
+}
+}
+}
+}
+
+
+@keyframes example {
+0% {color: rgba(255,255,255,0.2);}
+35% {color: rgba(255,255,255,1);}
+70% {color: rgba(255,255,255,0.2);}
+}
+}
+
+
+@media (max-width: 767.98px) {
+  .login-card {
+    .row{
+      height: 100vh !important;
+    }
+
+  }
+}

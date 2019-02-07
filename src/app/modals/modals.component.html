@@ -1,0 +1,260 @@
+
+<!-- Create / Edit Task Modal -->
+<!--<div class="modal fade" id="createTaskModal"  #createTaskModal tabindex="-1" role="dialog" aria-labelledby="createTaskModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <form #createTaskForm="ngForm">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createTaskModalLabel">Create a new task</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label>Project Name <span class="text-danger"><sup>*</sup></span></label>
+          <input type="text" class="form-control form-control-sm" id="projectName" name="projectName"
+          placeholder="Project Name" ngModel required minlength="5" maxlength="50">
+        </div>
+        <div class="form-group">
+          <label>Title <span class="text-danger"><sup>*</sup></span></label>
+          <input type="text" class="form-control form-control-sm" id="title" name="title" placeholder="Title"
+          ngModel required minlength="10" maxlength="50">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea class="form-control" id="desc" #description name="desc"
+          placeholder="Description" ngModel
+          maxlength="160" (keypress)="descriptionLength = description.value.length" minlength="20"></textarea>
+          <small class="text-muted"><code>{{descriptionLength}}/160</code></small>
+        </div>
+        <div class="form-group">
+          <label>Assign To <span class="text-danger"><sup>*</sup></span></label>
+          <div ngbDropdown placement="top" #assigneeDropDown="ngbDropdown">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><span class="fa fa-fw fa-user"></span></span>
+              </div>
+              <input type="text" class="form-control form-control-sm" id="assignedTo" name="assignedTo"
+              placeholder="Assign To" aria-label="Assign To" aria-describedby="user-icon"
+              (keydown)="getSuggestion($event);assigneeDropDown.open();" ngbDropdownAnchor
+              [(ngModel)]="assignName" required>
+            </div>
+            <div ngbDropdownMenu>
+              <div *ngFor="let emp of empList">
+                <button class="dropdown-item" (click)="addAssignee(emp);">{{emp?.EmployeeName}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Watchers</label>
+          <div ngbDropdown placement="top" #watcherDropDown="ngbDropdown">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><span class="fa fa-fw fa-users"></span></span>
+              </div>
+              <input type="text" class="form-control form-control-sm" id="watcher" name="watcher"
+              placeholder="Add a Watcher" aria-label="Add a Watcher" aria-describedby="user-group"
+              (keydown)="getSuggestion($event);watcherDropDown.open();" data-role="tagsinput" #watcher
+              ngbDropdownAnchor value="{{watcherName}}">
+              <div class="input-group-append">
+                <button type="button" class="btn btn-sm btn-outline-secondary"
+                (click)="addWatcher(watcher.value)">Add
+              </button>
+            </div>
+          </div>
+
+          <div ngbDropdownMenu>
+            <div *ngFor="let emp of empList">
+              <button class="dropdown-item" (click)="setWatcher(emp);">{{emp?.EmployeeName}}</button>
+            </div>
+          </div>
+        </div>
+        <div class="d-inline-block mt-2" *ngFor="let watcher of watchers">
+          <div class="watcher ml-1 p-1 btn " (click)="deleteWatcher(watcher)">{{watcher}}<span
+            class="fa fa-fw fa-remove text-danger"></span></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Due Date <span class="text-danger"><sup>*</sup></span></label>
+          <input type="date" class="form-control form-control-sm" id="dueDate" name="dueDate"
+          placeholder="Due Date" ngModel required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="createTask(createTaskForm.value)">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>-->
+<!-- Create / Edit Task Modal ends-->
+
+<!--Add Status modal-->
+<ng-template #addStatusModal let-c="close" let-d="dismiss">
+<!--<div class="modal fade" id="updateStatusModal" tabindex="-1" role="dialog" aria-labelledby="updateStatusModalLabel"
+     aria-hidden="true">
+     <div class="modal-dialog" role="document">
+    <div class="modal-content">-->
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateStatusModalLabel">Status Update</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #addStatusForm="ngForm">
+          <div class="form-group">
+            <strong>{{task.title}}</strong>
+            <span *ngIf="task.projectName">| <span class="text-muted">{{task.projectName}}</span></span>
+          </div>
+          <div class="row">
+          <div class="col-9">
+            <input type="range" min="0" max="100" name="x" [(ngModel)]="task['completionPercent']" class="" >
+          </div>
+          <div class="form-group col-3">
+            <input class="form-control" [min]="task['completionPercent']" max="100" [(ngModel)]="task['completionPercent']" type="number" name="completionPercent" >
+          </div>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control"  name="desc" placeholder="Description"
+                      maxlength="160" (keypress)="descriptionLength = description.value.length" #description [(ngModel)]="statusDesc"></textarea>
+                      {{statusDesc}}
+            <small class="form-text text-muted"><code>{{descriptionLength}}/160</code></small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="addStatus(addStatusForm.value)">Save</button>
+      </div>
+    <!--</div>
+  </div>
+</div>-->
+
+</ng-template>
+<!--Add status modal ends-->
+
+<!--Edit status modal-->
+<!-- <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editTaskModalLabel">Edit Task</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #editTaskForm="ngForm">
+          <div class="form-group">
+            <strong>{{task.title}}</strong>
+            <span *ngIf="task.projectName">| <span class="text-muted">{{task.projectName}}</span></span>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" id="editdescription" #editdescription name="editdescription" placeholder="Description"
+                      maxlength="160" (keypress)="editdescriptionLength = editdescription.value.length"
+                      [(ngModel)]="task.desc"></textarea>
+            <small class="form-text text-muted"><code>{{editdescriptionLength}}/160</code></small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="editTask(editTaskForm.value)" >Save</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!--Edit status modal ends-->
+
+<!--Delete status modal-->
+<!--<div class="modal fade" id="deleteStatusModal" tabindex="-1" role="dialog" aria-labelledby="deleteStatusModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteStatusModalLabel">Delete Status</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+        <form #deleteStatusForm="ngForm">
+          <div class="modal-body">
+          <div class="form-group">
+            <strong>{{task.title}}</strong>
+            <span *ngIf="task.projectName">| <span class="text-muted">{{task.projectName}}</span></span>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" id="deletedescription" #deletedescription name="deletedescription" placeholder="Description"
+                      maxlength="160"  [ngModel]="task.desc"
+                      readonly></textarea>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteTask()">Delete</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>-->
+<!--Delete status modal ends-->
+
+<!--Re-Assign Task modal-->
+<!--<div class="modal fade" id="reAssignTaskModal" #reAssignTaskModal tabindex="-1" role="dialog" aria-labelledby="reAssignTaskModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reAssignTaskModalLabel">Re-Assign Task</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #reAssignForm="ngForm">
+      <div class="modal-body">
+          <div class="form-group">
+            <strong>{{task.title}}</strong>
+            <span *ngIf="task.projectName">| <span class="text-muted">{{task.projectName}}</span></span>
+          </div>
+          <div class="form-group">
+            <label>Assign To <span class="text-danger"><sup>*</sup></span></label>
+
+            <div ngbDropdown placement="bottom" #reassignDropDown="ngbDropdown">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><span class="fa fa-fw fa-user"></span></span>
+                </div>
+                <input type="text" class="form-control form-control-sm" id="reassignedTo" name="reassignedTo"
+                       placeholder="Assign To" aria-label="Assign To" aria-describedby="user-icon"
+                       (keydown)="getSuggestion($event);reassignDropDown.open();" ngbDropdownAnchor
+                       [(ngModel)]="assignName" required>
+              </div>
+              <div ngbDropdownMenu>
+                <div *ngFor="let emp of empList">
+                  <button class="dropdown-item" (click)="addAssignee(emp);">{{emp?.EmployeeName}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)=" reAssignTask(reAssignForm.value)">Save</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>-->
+<!--Re-Assign Task modal ends-->

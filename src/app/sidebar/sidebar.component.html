@@ -1,0 +1,165 @@
+<div class="sidebar pt-1">
+  <form action="#" id="searchForm" #searchForm="ngForm">
+    <h5 class="p-3">
+      mStatus
+      <span (click)="this.dataService._sidebarVal=!this.dataService._sidebarVal" class="float-right btn fa fa-fw fa-lg fa-bars"></span>
+    </h5>
+
+    <div *ngIf="this.dataService._dashboardVal">
+      <ul class="list-group list-group-flush mt-2">
+        <li class="btn text-left list-group-item selected" [routerLink]="['/']">
+          Back to Home
+          <span class="mr-0 float-right btn fa fa-fw fa-lg fa-home"></span></li>
+      </ul>
+    </div>
+    <div *ngIf="!this.dataService._dashboardVal" class="mb-4">
+      <div *ngIf="this.dataService._sidebarVal" class="container form-group seperator">
+        <input autocomplete="off" type="search" class="form-control mt-4" placeholder="Search keyword" name="key" ngModel
+               (click)="userConfig._filters =  true; userConfig._aTasks = false; userConfig._wTasks = false;userConfig._rTasks = false;userConfig._cTasks = false;" (keyup.enter)="searchTasks(searchForm.value)"/>
+
+        <span class="btn float-right" style="font-size: 11px; color: rgba(255,255,255,0.6)"
+              (click)="_toggleThis('_filters')">
+          Advanced Search
+          <small><span class="fa fa-fw " [ngClass]="userConfig._filters? 'fa-chevron-up' : 'fa-chevron-down'"></span>
+          </small>
+          </span>
+        <div *ngIf="userConfig._filters" class="col-md-12 filter-list list-group list-group-flush mt-2  pl-2">
+          <div class="text-left mt-3">
+            <small class="row">
+              <span class="col-12"><span class="fa fa-fw fa-calendar"></span> Due Date</span>
+              <span class="col-12 mt-2">
+              <div class="input-group">
+                <input autocomplete="off" type="text" class="pl-2 form-control" name="dueDate" placeholder="YYYY-MM-DD" [(ngModel)]="dueDate" ngbDatepicker
+                       #d="ngbDatepicker"  [autoClose]="true">
+                <div class="input-group-append">
+                  <span class="input-group-text btn" (click)="d.toggle()"><span
+                    class="fa fa-fw fa-calendar"></span></span>
+                </div>
+              </div>
+              </span>
+            </small>
+          </div>
+          <div class="text-left mt-3">
+            <small class="row">
+              <span class="col-12"><span class="fa fa-fw fa-history"></span> Status</span>
+              <span class="col-12 mt-2">
+                                <span class="form-check">
+                                <input autocomplete="off" class="form-check-input" type="checkbox" name="task_status"
+                                       [checked]="taskStatus.Pending" [(ngModel)]="taskStatus.Pending"
+                                       value="Pending">
+                                  <label class="form-check-label">
+                                   Pending
+                                  </label>
+                                </span>
+                                 <span class="form-check">
+                                <input autocomplete="off" class="form-check-input" type="checkbox" name="task_status"
+                                       [checked]="taskStatus.inProgress" [(ngModel)]="taskStatus.inProgress"
+                                       value="In Pogress">
+                                  <label class="form-check-label">
+                                   In Progress
+                                  </label>
+                                </span>
+                                 <span class="form-check">
+                                <input autocomplete="off" class="form-check-input" type="checkbox" name="task_status"
+                                       [checked]="taskStatus.Complete" [(ngModel)]="taskStatus.Complete"
+                                       value="Completed">
+                                  <label class="form-check-label">
+                                   Completed
+                                  </label>
+                                </span>
+                              </span>
+            </small>
+          </div>
+          <div class="text-left mt-3">
+            <small class="row">
+              <span class="col-12"><span class="fa fa-fw fa-user-o"></span> User</span>
+              <span class=" mt-2" ngbDropdown placement="bottom" #assigneeDropDown1="ngbDropdown">
+                   <span class="input-group col-12">
+                    <input autocomplete="off" type="search" placeholder="Search user" name="assignee" class="pl-2 form-control"
+                           (keyup)="getSuggestion($event);assigneeDropDown1.open();" ngbDropdownAnchor
+                            [(ngModel)]="assignId"/>
+                     <!--<span class="input-group-append">
+                      <span class="input-group-text"><i class="fa fa-fw fa-search"></i></span>
+                     </span>-->
+                   </span>
+                <div ngbDropdownMenu *ngIf="empList.length > 0" style="width: 60px !important; font-size: small; padding: 0 0.5rem;">
+                      <div *ngFor="let emp of empList">
+                        <button class="dropdown-item" style="padding: .25rem; overflow: hidden"
+                                (click)="addAssignee(emp);">{{emp?.EmployeeName}}</button>
+                      </div>
+                    </div>
+              </span>
+            </small>
+          </div>
+          <div class="btn btn-sm search-btn btn-outline-light mt-3" (click)="searchTasks(searchForm.value)"><span
+            class="fa fa-fw" [ngClass]="searchInProgress ? 'fa-spin fa-circle-o-notch' : 'fa-search'"></span> Search Tasks
+          </div>
+        </div>
+      </div>
+      <ul class="list-group list-group-flush mt-2">
+        <li class="btn text-left list-group-item " [ngClass]="userConfig._aTasks? 'selected' : ''"
+            (click)="_toggleThis('_aTasks')" title="Assigned Tasks">
+          Assigned Tasks
+          <div *ngIf="this.dataService._sidebarVal;then assignedSlideButton else assignedToggleButton"></div>
+          <ng-template #assignedToggleButton><span class="mr-0 float-right btn fa fa-fw fa-lg fa-user-o"></span>
+          </ng-template>
+          <ng-template #assignedSlideButton>
+            <label class="switch float-right btn">
+              <input autocomplete="off" type="checkbox" [checked]="userConfig._aTasks" (click)="_toggleThis('_aTasks')">
+              <span class="slider round"></span>
+            </label>
+          </ng-template>
+        </li>
+        <li class="btn text-left list-group-item" [ngClass]="userConfig._wTasks? 'selected' : ''"
+            (click)="_toggleThis('_wTasks')" title="Watching Tasks">
+          Watching Tasks
+
+          <div *ngIf="this.dataService._sidebarVal;then watchingSlideButton else watchingToggleButton"></div>
+          <ng-template #watchingToggleButton><span class="mr-0 float-right btn fa fa-fw fa-lg fa-eye"></span>
+          </ng-template>
+          <ng-template #watchingSlideButton>
+            <label class="switch float-right btn">
+              <input autocomplete="off" type="checkbox" [checked]="userConfig._wTasks" (click)="_toggleThis('_wTasks')">
+              <span class="slider round"></span>
+            </label>
+          </ng-template>
+        </li>
+        <li class="btn text-left list-group-item" [ngClass]="userConfig._cTasks? 'selected' : ''"
+            (click)="_toggleThis('_cTasks')" title="Completed Tasks">
+          Completed Tasks
+
+          <div *ngIf="this.dataService._sidebarVal;then completedSlideButton else completedToggleButton"></div>
+          <ng-template #completedToggleButton><span class="mr-0 float-right btn fa fa-fw fa-lg  fa-check-circle-o"></span>
+          </ng-template>
+          <ng-template #completedSlideButton>
+            <label class="switch float-right btn">
+              <input autocomplete="off" type="checkbox" [checked]="userConfig._cTasks" (click)="_toggleThis('_cTasks')">
+              <span class="slider round"></span>
+            </label>
+          </ng-template>
+        </li>
+        <li class="btn text-left list-group-item" [ngClass]="userConfig._rTasks? 'selected' : ''"
+            (click)="_toggleThis('_rTasks')" title="All the rest">
+          All the rest
+
+          <div *ngIf="this.dataService._sidebarVal;then restSlideButton else restToggleButton"></div>
+          <ng-template #restToggleButton><span class="mr-0 float-right btn fa fa-fw fa-lg fa-globe"></span>
+          </ng-template>
+          <ng-template #restSlideButton>
+            <label class="switch float-right btn">
+              <input autocomplete="off" type="checkbox" [checked]="userConfig._rTasks" (click)="_toggleThis('_rTasks')">
+              <span class="slider round"></span>
+            </label>
+          </ng-template>
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="this.dataService._sidebarVal">
+      <div class="footer text-center">
+        <small>&copy; 2018 Miracle Software Systems, Inc.</small>
+      </div>
+    </div>
+
+  </form>
+</div>

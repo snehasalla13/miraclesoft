@@ -1,0 +1,62 @@
+.task-wrapper {
+  .timeline {
+    border-top: 3px solid rgba(209, 209, 209, 0.3);
+    .pre-scrollable{
+      max-height: 450px;
+      &::-webkit-scrollbar {
+        width: 0.3em;
+      }
+
+      &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: darkgrey;
+        outline: 1px solid slategrey;
+      }
+    }
+    .task-recent-status {
+      border-left: 2px solid #ccc;
+      padding: 12px 0px 10px 0px;
+
+      .fa-circle {
+        position: relative;
+        left: -7px;
+        color: #fff;
+        border: 1px solid dodgerblue;
+        border-radius: 30px;
+        font-size: x-small;
+      }
+      .history-label {
+        margin-left: -10px;
+      }
+      .description {
+        margin-left: 15px;
+
+      }
+    }
+  }
+
+}
+.watcher{
+  border: 1px solid #bec0c4;
+  border-radius: 50px;
+  padding: 3px 15px;
+}
+
+.addStatus-modal {
+  .modal-header {
+    background: #00aae7;
+  }
+  .addStatus-btn {
+    border: 1px solid #00aae7;
+    color: #00aae7;
+    background: white;
+    &:hover {
+      color: white;
+      background: #00aae7;
+    }
+
+  }
+}

@@ -1,0 +1,73 @@
+<div class="wrapper h-100">
+  <div  style="padding-top: 12vh" class="d-none d-md-block d-lg-block"></div>
+  <div class="row mont justify-content-center">
+    <div class="login-card" style="width: 400px; z-index: 1">
+      <div class="row p-2" style="min-height: 450px">
+        <div class="col-md-12 card-left" style="padding-top: 80px">
+
+          <div class="login-card-content-main">
+            <div class="login-card-header text-center">
+              m<span style="color: #00aae7">Status</span>
+            </div>
+            <div class="small tagline mb-4">
+              <div class="tagline-inner">Your new zen of productivity, project management and task tracking.</div>
+            </div>
+            <div class="icons-wrapper" style="padding: 10px">
+              <div class="icons mb-4" style="font-weight: 200;">
+                <span class="lnr lnr-calendar-full"></span>
+                <span class="lnr lnr-rocket"></span>
+                <span class="lnr lnr-clock"></span>
+                <span class="lnr lnr-alarm"></span>
+                <span class="lnr lnr-code"></span>
+              </div>
+            </div>
+            <div class="card-tagline text-center" *ngIf="error">
+              <span class="text-danger" style="font-size: small !important;">Invalid Hubble Credentials</span>
+              <div class="text-danger" style="font-size: small !important;">Please try again</div>
+            </div>
+            <form class="form-signin" #loginForm="ngForm" >
+
+            <div class="card-form text-center">
+              <div class="form-group">
+                <input type="text" id="inputUserId" class="form-control" placeholder="Hubble Username"  name="userid" #userid
+                       ngModel required autofocus>
+              </div>
+              <div class="form-group">
+                <input type="password" id="inputPassword" class="form-control" placeholder="Hubble Password" name="password"
+                       #password ngModel required>
+              </div>
+            </div>
+            <div class="login-cta text-center mb-4">
+              <button class="btn btn login-button-type-1" [ngClass]="showProgress? 'disabled' : ''" type="submit" (click)="login(loginForm.value)">
+                Sign In
+                <span  *ngIf="showProgress" class="fa fa-fw" [ngClass]="loginInProgress? 'fa-spin fa-circle-o-notch' : ''"></span>
+              </button>
+            </div>
+            </form>
+          </div>
+
+        </div>
+        <div class="col-md-6 card-right" style="padding-top: 90px" hidden>
+          <div class="login-card-header text-center mb-4">
+            Log In
+          </div>
+          <div class="login-wrapper" style="padding: 0px 10px;">
+            <div class="form-group">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="Hubble Password">
+            </div>
+            <div class="form-group">
+              <button class="btn btn-outline btn-block">Log In</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="text-right small mt-1" style="font-weight: 500; color: #333; bottom: 5px !important; right: 5px !important; position: absolute;">
+      With <span class="fa fa-fw fa-heart text-danger"></span> by <span class="font-weight-bold">Miracle Labs</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<mtm-login *ngIf="!loggedIn" (passAuth)="setAuth ($event)"></mtm-login>
+<ng-sidebar-container *ngIf="loggedIn">
+  <!-- A sidebar -->
+  <ng-sidebar [(opened)]="this.dataService._sidebarVal" [autoFocus]="false" [dock]="screenSize == 'BIG'" dockedSize="60px" [mode]="(screenSize == 'BIG')? 'push' : 'over'" animate="true" autoCollapseWidth="989" >
+    <mtm-sidebar></mtm-sidebar>
+  </ng-sidebar>
+  <div  ng-sidebar-content>
+
+    <mtm-topbar *ngIf="loggedIn" (passAuth)="setAuth ($event)"  class="col-md-12"></mtm-topbar>
+    <router-outlet *ngIf="loggedIn" class="pre-scrollable"  (passAuth)="setAuth ($event)"></router-outlet>
+  </div>
+
+</ng-sidebar-container>
+<!-- <mtm-footer class="mb-0" *ngIf="loggedIn"></mtm-footer>  -->

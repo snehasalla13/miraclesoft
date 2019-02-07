@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+
+/* You can add global styles to this file, and also import other style files */
+body{
+  padding-top: 0 !important;
+  background-color: #F4F6F9;
+  font-family:  "Montserrat", monospace !important;
+
+  .status-description {
+    font:inherit;
+    color: inherit;
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;
+    text-align: justify;
+  }
+  @media (max-width: 767.98px) {
+    .task-item-mobile {
+      display: block;
+      padding-top: 0.2em;
+    }
+    .padding-top4-mobile {
+      padding-top: 0.4em !important;
+    }
+    .margin-top4-mobile {
+      margin-top: 0.4em !important;
+    }
+
+    .ml-2-mobile {
+      margin-left: .5rem!important;
+    }
+
+    .btn-block-mobile {
+      text-align: center !important;
+      .btn {
+        display: block;
+        width: 100%;
+      }
+    }
+    .width-75-mobile {
+      width: 75% !important;
+    }
+    .width-50-mobile {
+      width: 50% !important;
+    }
+    .width-25-mobile {
+      width: 25% !important;
+    }
+    .width-15-mobile {
+      width: 15% !important;
+    }
+
+  }
+  .disabled{
+    cursor: not-allowed;
+  }
+
+  .alert {
+    font-size: small !important;
+  }
+
+
+  .btn-round {
+    font-weight: 500;
+    border-radius: 300px;
+    &:focus {
+      box-shadow: none !important;
+    }
+  }
+
+
+.modal-footer{
+  border: none;
+}
+.modal-content {
+  border-radius: 0;
+}
+.modal-header{
+  background: #f9fcff;
+  border-radius: 0;
+}
+.input-group-text{
+  background: #ffffff;
+  color: #039be5;
+}
+
+
+}
+
+
+input[type='text'], textarea {
+  &.ng-invalid.ng-dirty {
+    border-color: red;
+    outline: 0;
+    box-shadow: 0 0 0 0.02rem red;
+  }
+
+  &.ng-valid.ng-dirty {
+    border-color: green;
+    outline: 0;
+    box-shadow: 0 0 0 0.02rem green;
+  }
+}
