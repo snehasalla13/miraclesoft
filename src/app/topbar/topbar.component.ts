@@ -26,7 +26,7 @@ export class TopbarComponent implements OnInit {
   assignedList: Task[] = [];
   empListAssignee = [];
   empListWatcher = [];
-
+  loginId;
   lastKeypress = 0;
   listOfWatchers: string[] = [];
   watcher;
@@ -58,6 +58,7 @@ export class TopbarComponent implements OnInit {
   ngOnInit() {
     this.loggedInUser = new User();
     this.loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    this.loginId = this.loggedInUser.LoginId;
     this.notificationService.getPermission();
     this.notificationService.receiveMessage();
     this.dataService._notification.subscribe((res) => {
@@ -65,7 +66,7 @@ export class TopbarComponent implements OnInit {
         this.notifications.push(res);
       }
     });
-    this.profileService.getProfileInformation('userid').subscribe(res => this.profileData = res);
+    this.profileService.getProfileInformation(this.loggedInUser.LoginId).subscribe(res => this.profileData = res);
     this.dataService._assignedTasksFromService.subscribe((response: Task[]) => {
       this.assignedList = response;
     });

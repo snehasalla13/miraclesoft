@@ -15,29 +15,19 @@
           <th scope="col" class="text-left"><span class="fa fa-fw fa-user-o"></span> Employee </th>
           <th scope="col"><span class="fa fa-fw fa-hourglass-half text-secondary "></span> Active Tasks</th>
           <th scope="col"><span class="fa fa-fw fa-info-circle text-danger"></span> Status</th>
-          <!-- <th scope="col"><span class="fa fa-fw fa-hourglass-half text-light "></span> Completed Tasks</th>
-          <th scope="col"><span class="fa fa-fw fa-star text-danger"></span> Weekly Points</th>
-          <th scope="col" class="text-left"><span class="fa fa-fw fa-bar-chart-o text-success"></span> Score</th> -->
         </tr>
         </thead>
         <tbody>
-            <!-- <div><tr *ngFor="let emp of empList|slice:0;let i = index"
-            [ngClass]="emp['userName'] === loggedInUser.LoginId ? 'font-weight-bold' : '' ">
-          <td scope="row">{{i+1}}</td>
-          <td class="text-left">  {{emp['fName']}}
-           <span class="small">
-              ({{emp['userName']}})</span></td>
-          <td>{{emp['activeTasks']}}</td></div>
-        </tr>
-        <tr></tr> -->
-
 
           <tr *ngFor="let emp of empList|slice:0;let i = index"
             [ngClass]="emp['userName'] === loggedInUser.LoginId ? 'font-weight-bold' : '' ">
           <td>{{i+1}}</td>
-          <td class="text-left">  {{emp['fName']}}
-            <a [routerLink]="['/','profile',emp['userName']]"><span class="small">
-              ({{emp['userName']}})</span></a></td>
+          <td class="text-left"> <img src="{{emp['image']}}" class="profileImage" />
+            <a class="highlight" [routerLink]="['/','profile',emp['userName']]">
+            <span class="name-style">{{emp['name']}}</span></a>
+            <!-- <a [routerLink]="['/','profile',emp['userName']]"><span class="small">
+              ({{emp['userName']}})</span></a> -->
+            </td>
           <td>{{emp['activeTasks']}}</td>
           <td>{{emp['status']}}</td>
         </tr>
@@ -49,84 +39,6 @@
 
 </div>
 </div>
-          <!-- <td>{{emp['weekBoard']['taskCount']}}</td>
-          <td>{{emp['weekBoard']['points']}} -->
-            <!--
-            <span class="fa fa-fw" style="font-size: small !important;"
-                  [ngClass]="(emp['weekBoard']['points'] > emp['previousWeekBoard']['points'])? 'fa-arrow-up text-success' : 'fa-arrow-down text-danger'"></span>-->
-          <!-- </td> -->
-          <!-- <td style="cursor: help" class="text-left"
-              [title]="'Previous week ' +  emp['previousWeekBoard']['score']['$numberDecimal']">
-            {{emp['weekBoard']['score']['$numberDecimal']}}
-            <span style="font-size: xx-small"
-                  *ngIf="toFloat(emp['weekBoard']['score']['$numberDecimal']) !=
-                  toFloat(emp['previousWeekBoard']['score']['$numberDecimal'])">
-                  <span class="fa fa-fw" style="font-size: xx-small !important;"
-              [ngClass]="(toFloat(emp['weekBoard']['score']['$numberDecimal']) >
-              toFloat(emp['previousWeekBoard']['score']['$numberDecimal']))? 'fa-arrow-up text-success' :
-               'fa-arrow-down text-danger'"></span>
-              {{getDifference(emp['weekBoard']['score']['$numberDecimal'],
-              emp['previousWeekBoard']['score']['$numberDecimal']) }}
-            </span>
-          </td> -->
-
-
-          <!-- <td>{{emp['weekBoard']['taskCount']}}</td>
-          <td>{{emp['weekBoard']['points']}} </td> -->
-            <!--
-            <span class="fa fa-fw" style="font-size: small !important;"
-                  [ngClass]="(emp['weekBoard']['points'] > emp['previousWeekBoard']['points'])? 'fa-arrow-up text-success' : 'fa-arrow-down text-danger'"></span>-->
-
-          <!-- <td style="cursor: help" class="text-left"
-              [title]="'Previous week ' +  emp['previousWeekBoard']['score']['$numberDecimal']">
-            {{emp['weekBoard']['score']['$numberDecimal']}}
-            <span style="font-size: xx-small"
-                  *ngIf="toFloat(emp['weekBoard']['score']['$numberDecimal']) !=
-                  toFloat(emp['previousWeekBoard']['score']['$numberDecimal'])">
-                  <span class="fa fa-fw" style="font-size: xx-small !important;"
-              [ngClass]="(toFloat(emp['weekBoard']['score']['$numberDecimal']) >
-              toFloat(emp['previousWeekBoard']['score']['$numberDecimal']))? 'fa-arrow-up text-success' :
-               'fa-arrow-down text-danger'"></span>
-              {{getDifference(emp['weekBoard']['score']['$numberDecimal'],
-              emp['previousWeekBoard']['score']['$numberDecimal']) }}
-            </span>
-          </td> -->
-
-
-        <!-- <tr *ngIf="userProfile && userProfile['rank'] != 11"
-        class="small">
-          <td scope="row"><span class="fa fa-fw fa-ellipsis-v"></span></td>
-          <td scope="row" class="text-left"><span class="fa fa-fw fa-ellipsis-v"></span></td>
-          <td><span class="fa fa-fw fa-ellipsis-v"></span></td>
-          <td><span class="fa fa-fw fa-ellipsis-v"></span></td>
-          <td class="text-left"><span class="fa fa-fw fa-ellipsis-v"></span></td>
-        </tr>
-        <tr></tr> -->
-        <!-- <tr *ngIf="userProfile" class="font-weight-bold">
-          <td scope="row">{{userProfile['rank']}}</td>
-          <td scope="row" class="text-left">{{userProfile['user']['name']}}
-            <span class="small">({{userProfile['user']['username']}})</span>
-          </td>
-          <td>{{userProfile['user']['activeTasks']}}</td> -->
-          <!-- <td>{{userProfile['user']['weekBoard']['taskCount']}}</td>
-          <td>{{userProfile['user']['weekBoard']['points']}}</td>
-          <td class="text-left" style="cursor: help; "
-              [title]="'Previous week ' +  userProfile['user']['previousWeekBoard']['score']['$numberDecimal']">
-            {{userProfile['user']['weekBoard']['score']['$numberDecimal']}}
-            <span class="fa fa-fw" style="font-size: xx-small !important;"
-                  [ngClass]="
-                  (toFloat(userProfile['user']['weekBoard']['score']['$numberDecimal']) >
-                  toFloat(userProfile['user']['previousWeekBoard']['score']['$numberDecimal']))?
-                   'fa-arrow-up text-success' : 'fa-arrow-down text-danger'"></span>
-            <span style="font-size: xx-small !important;">{{getDifference(userProfile['user']
-              ['weekBoard']['score']['$numberDecimal'],
-              userProfile['user']['previousWeekBoard']['score']['$numberDecimal'])}}</span>
-            </td> -->
-
-
-        <!-- </tr> -->
-
-
 
 <!-- Modal -->
 <div class="modal fade" id="scoreInfoModal" tabindex="-1" role="dialog" aria-labelledby="scoreInfoModalLabel"
